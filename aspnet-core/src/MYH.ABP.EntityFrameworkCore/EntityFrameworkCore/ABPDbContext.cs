@@ -3,6 +3,8 @@ using Abp.Zero.EntityFrameworkCore;
 using MYH.ABP.Authorization.Roles;
 using MYH.ABP.Authorization.Users;
 using MYH.ABP.MultiTenancy;
+using MYH.ABP.PhoneBook.Persons;
+using MYH.ABP.PhoneBook.PhoneNum;
 
 namespace MYH.ABP.EntityFrameworkCore
 {
@@ -13,6 +15,17 @@ namespace MYH.ABP.EntityFrameworkCore
         public ABPDbContext(DbContextOptions<ABPDbContext> options)
             : base(options)
         {
+        }
+
+        public DbSet<Person> Person { get; set; }
+
+        public DbSet<PhoneNumber> PhoneNumber { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>().ToTable("Person", "PB");
+            modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumber", "PB");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

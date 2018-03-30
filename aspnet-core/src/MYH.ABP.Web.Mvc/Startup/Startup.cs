@@ -53,8 +53,14 @@ namespace MYH.ABP.Web.Startup
                 // Configure Log4Net logging
                 options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
                     f => f.UseAbpLog4Net().WithConfig("log4net.config")
-                )
+                )         
             );
+
+            //动态加载模块
+            //services.AddAbp<ABPWebMvcModule>(options =>
+            //{
+            //    options.PlugInSources.AddFolder(@"C:\MyPlugIns");
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
