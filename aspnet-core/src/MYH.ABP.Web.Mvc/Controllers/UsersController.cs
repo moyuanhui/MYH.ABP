@@ -6,6 +6,7 @@ using MYH.ABP.Authorization;
 using MYH.ABP.Controllers;
 using MYH.ABP.Users;
 using MYH.ABP.Web.Models.Users;
+using Abp.Runtime.Caching;
 
 namespace MYH.ABP.Web.Controllers
 {
@@ -13,20 +14,24 @@ namespace MYH.ABP.Web.Controllers
     public class UsersController : ABPControllerBase
     {
         private readonly IUserAppService _userAppService;
+        private readonly ICacheManager _cacheManager;
 
-        public UsersController(IUserAppService userAppService)
+        public UsersController(IUserAppService userAppService,ICacheManager cacheManager)
         {
+            _cacheManager = cacheManager;
             _userAppService = userAppService;
         }
 
         public async Task<ActionResult> Index()
         {
+            
             var users = (await _userAppService.GetAll(new PagedResultRequestDto {MaxResultCount = int.MaxValue})).Items; // Paging not implemented yet
-            var roles = (await _userAppService.GetRoles()).Items;
+            //_cacheManager.GetCache("fadf").Set("username:001","test");
+            //var aa = _cacheManager.GetCache("fadf").GetOrDefault("username:001");
             var model = new UserListViewModel
             {
                 Users = users,
-                Roles = roles
+               // Roles = roles
             };
             return View(model);
         }

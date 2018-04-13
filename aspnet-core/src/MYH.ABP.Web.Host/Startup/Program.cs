@@ -14,6 +14,7 @@ namespace MYH.ABP.Web.Host.Startup
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:8000")
                 .Build();
         }
     }

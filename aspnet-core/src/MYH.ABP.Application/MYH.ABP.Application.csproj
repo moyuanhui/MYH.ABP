@@ -13,6 +13,9 @@
   <PropertyGroup>
     <DefineConstants>FEATURE_SIGNALR_ASPNETCORE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\MYH.ABP.Web.Host\doc\MYH.ABP.Application.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MYH.ABP.Core\MYH.ABP.Core.csproj" />
   </ItemGroup>

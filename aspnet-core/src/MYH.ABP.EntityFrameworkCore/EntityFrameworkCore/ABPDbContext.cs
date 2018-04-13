@@ -5,6 +5,7 @@ using MYH.ABP.Authorization.Users;
 using MYH.ABP.MultiTenancy;
 using MYH.ABP.PhoneBook.Persons;
 using MYH.ABP.PhoneBook.PhoneNum;
+using MYH.ABP.Order;
 
 namespace MYH.ABP.EntityFrameworkCore
 {
@@ -20,6 +21,10 @@ namespace MYH.ABP.EntityFrameworkCore
         public DbSet<Person> Person { get; set; }
 
         public DbSet<PhoneNumber> PhoneNumber { get; set; }
+
+        public DbSet<OrderInfo> OrderInfo { get; set; }
+
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

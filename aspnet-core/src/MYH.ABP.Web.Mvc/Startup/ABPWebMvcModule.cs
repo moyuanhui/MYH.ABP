@@ -3,10 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using MYH.ABP.Configuration;
+using Abp.Runtime.Caching.Redis;
+
 
 namespace MYH.ABP.Web.Startup
 {
-    [DependsOn(typeof(ABPWebCoreModule))]
+    [DependsOn(
+        typeof(ABPWebCoreModule))]
     public class ABPWebMvcModule : AbpModule
     {
         private readonly IHostingEnvironment _env;
@@ -20,6 +23,9 @@ namespace MYH.ABP.Web.Startup
 
         public override void PreInitialize()
         {
+          
+
+
             Configuration.Navigation.Providers.Add<ABPNavigationProvider>();
         }
 

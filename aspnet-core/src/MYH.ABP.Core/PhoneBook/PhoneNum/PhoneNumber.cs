@@ -8,9 +8,8 @@ using Abp.Domain.Entities;
 
 namespace MYH.ABP.PhoneBook.PhoneNum
 {
-    public class PhoneNumber :Entity<long>, IHasCreationTime
+    public class PhoneNumber :FullAuditedEntity<int>
     {
-        public DateTime CreationTime { get; set; }
 
         /// <summary>
         /// 电话号码

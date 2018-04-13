@@ -14,6 +14,7 @@ using Abp.Extensions;
 using MYH.ABP.Authentication.JwtBearer;
 using MYH.ABP.Configuration;
 using MYH.ABP.Identity;
+using System.IO;
 
 #if FEATURE_SIGNALR
 using Microsoft.AspNet.SignalR;
@@ -32,10 +33,12 @@ namespace MYH.ABP.Web.Host.Startup
         private const string _defaultCorsPolicyName = "localhost";
 
         private readonly IConfigurationRoot _appConfiguration;
+        private readonly IHostingEnvironment _env;
 
         public Startup(IHostingEnvironment env)
         {
             _appConfiguration = env.GetAppConfiguration();
+            _env = env;
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -52,48 +55,10 @@ namespace MYH.ABP.Web.Host.Startup
             services.AddSignalR();
 #endif
 
-            // Configure CORS for angular2 UI
-            services.AddCors(
-                options => options.AddPolicy(
-                    _defaultCorsPolicyName,
-                    builder => builder
-                        .WithOrigins(
-                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
-                            _appConfiguration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                )
-            );
+            ConfigureCrosService(services);
+            ConfigureSwaggerService(services);
+            return  ConfigureAbpService(services);
 
-            // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Info { Title = "ABP API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-
-                // Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme()
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
-                });
-                // Assign scope requirements to operations based on AuthorizeAttribute
-                options.OperationFilter<SecurityRequirementsOperationFilter>();
-            });
-
-            // Configure Abp and Dependency Injection
-            return services.AddAbp<ABPWebHostModule>(
-                // Configure Log4Net logging
-                options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
-                    f => f.UseAbpLog4Net().WithConfig("log4net.config")
-                )
-            );
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -136,8 +101,86 @@ namespace MYH.ABP.Web.Host.Startup
             {
                 options.InjectOnCompleteJavaScript("/swagger/ui/abp.js");
                 options.InjectOnCompleteJavaScript("/swagger/ui/on-complete.js");
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "ABP API V1");
+
+                //加载中文包
+                options.InjectOnCompleteJavaScript("/swagger/ui/zh_CN.js");
+                options.InjectStylesheet("/swagger/ui/zh_CN.css");
+
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "MYH API V1");
             }); // URL: /swagger
+        }
+
+        /// <summary>
+        /// 配置 Swagger UI 服务
+        /// </summary>
+        private IServiceCollection ConfigureSwaggerService(IServiceCollection services)
+        {
+            // 注册 Swagger UI 组件
+            return services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info { Title = "MYH API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+
+                // 使用 JWT 作为其默认验证方式
+                options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+
+                options.DocumentFilter<SwaggerCustomUIFiliter>();               // 指定自定义文档过滤器
+                options.OperationFilter<SecurityRequirementsOperationFilter>(); // 指定授权过滤器
+                options.CustomSchemaIds(type => type.FullName);                 // 解决相同类名会报错的问题
+
+                DirectoryInfo directory = new DirectoryInfo(Path.Combine(_env.ContentRootPath, "doc"));
+                if (directory.Exists)
+                {
+                    foreach (var file in directory.GetFiles("*.xml"))
+                    {
+                        options.IncludeXmlComments(file.FullName);               // 标注要使用的 XML 文档
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Abp框架配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private IServiceProvider ConfigureAbpService(IServiceCollection services)
+        {
+            return services.AddAbp<ABPWebHostModule>(
+                 options => options.IocManager.IocContainer.AddFacility<LoggingFacility>(
+                     f => f.UseAbpLog4Net().WithConfig("log4net.config")
+                 )
+             );
+        }
+
+
+        /// <summary>
+        /// 配置Cros服务
+        /// </summary>
+        /// <param name="services"></param>
+        private void ConfigureCrosService(IServiceCollection services)
+        {
+            services.AddCors(
+              options => options.AddPolicy(
+                  _defaultCorsPolicyName,
+                  builder => builder
+                      .WithOrigins(
+                          // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                          _appConfiguration["App:CorsOrigins"]
+                              .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                              .Select(o => o.RemovePostFix("/"))
+                              .ToArray()
+                      )
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+              )
+          );
         }
 
 #if FEATURE_SIGNALR

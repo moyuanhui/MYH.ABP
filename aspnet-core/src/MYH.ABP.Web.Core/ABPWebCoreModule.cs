@@ -11,6 +11,7 @@ using Abp.Zero.Configuration;
 using MYH.ABP.Authentication.JwtBearer;
 using MYH.ABP.Configuration;
 using MYH.ABP.EntityFrameworkCore;
+using Abp.Runtime.Caching.Redis;
 
 #if FEATURE_SIGNALR
 using Abp.Web.SignalR;
@@ -23,7 +24,8 @@ namespace MYH.ABP
     [DependsOn(
          typeof(ABPApplicationModule),
          typeof(ABPEntityFrameworkModule),
-         typeof(AbpAspNetCoreModule)
+         typeof(AbpAspNetCoreModule),
+         typeof(AbpRedisCacheModule)
 #if FEATURE_SIGNALR 
         ,typeof(AbpWebSignalRModule)
 #elif FEATURE_SIGNALR_ASPNETCORE
@@ -46,6 +48,20 @@ namespace MYH.ABP
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(
                 ABPConsts.ConnectionStringName
             );
+
+            //配置使用Redis缓存
+            Configuration.Caching.UseRedis();
+
+            //配置所有Cache的默认过期时间为半个小时
+            Configuration.Caching.ConfigureAll(cache =>
+            {
+                cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(30);
+            });
+
+            Configuration.Caching.Configure("LoginUserCache", cache =>
+            {
+                cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(8);
+            });
 
             // Use database for language management
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();

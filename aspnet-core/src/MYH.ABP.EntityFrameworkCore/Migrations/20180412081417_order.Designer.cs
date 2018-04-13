@@ -17,9 +17,10 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    partial class ABPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180412081417_order")]
+    partial class order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

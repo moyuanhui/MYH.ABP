@@ -61,7 +61,11 @@ namespace MYH.ABP.Users
 
             return MapToEntityDto(user);
         }
-
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public override async Task<UserDto> Update(UserDto input)
         {
             CheckUpdatePermission();
