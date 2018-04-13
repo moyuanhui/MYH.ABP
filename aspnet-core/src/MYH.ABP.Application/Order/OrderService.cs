@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Repositories;
+﻿using Abp.Authorization;
+using Abp.Domain.Repositories;
 using Abp.ObjectMapping;
 using AutoMapper;
 using MYH.ABP.Order.Dto;
@@ -9,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace MYH.ABP.Order
 {
+    /// <summary>
+    /// 订单
+    /// </summary>
+    [AbpAuthorize]
     public class OrderService : ABPAppServiceBase, IOrderService
     {
         public readonly IRepository<OrderInfo> _orderRepository;
@@ -20,7 +25,7 @@ namespace MYH.ABP.Order
         }
 
         /// <summary>
-        /// 订单
+        /// 创建订单
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

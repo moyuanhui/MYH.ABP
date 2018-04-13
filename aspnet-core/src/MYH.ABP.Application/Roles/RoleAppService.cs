@@ -16,6 +16,9 @@ using MYH.ABP.Roles.Dto;
 
 namespace MYH.ABP.Roles
 {
+    /// <summary>
+    /// 权限
+    /// </summary>
     [AbpAuthorize(PermissionNames.Pages_Roles)]
     public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService
     {
