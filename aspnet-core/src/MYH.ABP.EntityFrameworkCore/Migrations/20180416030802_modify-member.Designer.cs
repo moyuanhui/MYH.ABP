@@ -17,9 +17,10 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    partial class ABPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180416030802_modify-member")]
+    partial class modifymember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -996,21 +997,31 @@ namespace MYH.ABP.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("AccountId");
 
-                    b.Property<string>("CompanyId")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("CompanyId");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
 
                     b.Property<string>("CustomerId");
 
                     b.Property<string>("CustomerName");
 
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
                     b.Property<string>("FakeId");
 
                     b.Property<string>("HeadUrl");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
 
                     b.Property<string>("NickName");
 

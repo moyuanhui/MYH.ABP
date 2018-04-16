@@ -1,39 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Abp.Domain.Entities.Auditing;
+using Abp.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace MYH.ABP.Member
 {
-    public class MemberEntity : FullAuditedEntity<int>
+    public class MemberEntity : Entity<int>
     {
-        public string CompanyId;
+        [StringLength(50)]
+        [Required]
+        public string CompanyId { get; set; }
+        [StringLength(50)]
+        [Required]
 
-        public string AccountId;
+        public string AccountId { get; set; }
 
-        public string UnionId;
+        public string UnionId { get; set; }
 
-        public string FakeId;
+        public string FakeId { get; set; }
 
-        public string CustomerId;
+        public string CustomerId { get; set; }
 
-        public string CustomerName;
+        public string CustomerName { get; set; }
 
-        public string Sex;
+        public string Sex { get; set; }
 
         /// <summary>
         /// 小程序OpenId
         /// </summary>
-        public string OpenIdMini;
+        public string OpenIdMini { get; set; }
 
         /// <summary>
         /// 公众号OpenId
         /// </summary>
-        public string OpenIdMp;
+        public string OpenIdMp { get; set; }
 
-        public string NickName;
+        public string NickName { get; set; }
 
-        public string HeadUrl;
+        public string HeadUrl { get; set; }
+
     }
 }
