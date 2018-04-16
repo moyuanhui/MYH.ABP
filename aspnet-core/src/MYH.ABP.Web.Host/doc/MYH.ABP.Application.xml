@@ -312,18 +312,6 @@
         <member name="F:MYH.ABP.Net.MimeTypes.MimeTypeNames.ApplicationZip">
             <summary>ZIP archive files; Registered[7]</summary>
         </member>
-        <member name="T:MYH.ABP.Order.OrderService">
-            <summary>
-            订单
-            </summary>
-        </member>
-        <member name="M:MYH.ABP.Order.OrderService.Create(MYH.ABP.Order.Dto.OrderDto)">
-            <summary>
-            创建订单
-            </summary>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
         <member name="M:MYH.ABP.PhoneBooks.PersonAppService.Create(MYH.ABP.PhoneBooks.Dtos.PhoneNumberDto)">
             <summary>
             增加手机号

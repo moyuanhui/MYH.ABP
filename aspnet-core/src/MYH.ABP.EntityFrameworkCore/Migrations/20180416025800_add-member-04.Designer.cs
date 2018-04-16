@@ -17,9 +17,10 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    partial class ABPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180416025800_add-member-04")]
+    partial class addmember04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

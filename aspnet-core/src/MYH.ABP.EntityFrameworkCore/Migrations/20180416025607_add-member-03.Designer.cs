@@ -17,8 +17,8 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    [Migration("20180412081417_order")]
-    partial class order
+    [Migration("20180416025607_add-member-03")]
+    partial class addmember03
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -992,6 +992,30 @@ namespace MYH.ABP.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("MYH.ABP.Member.MemberEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MemberEntity","EWMS");
+                });
+
             modelBuilder.Entity("MYH.ABP.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1039,20 +1063,6 @@ namespace MYH.ABP.Migrations
                     b.HasIndex("TenancyName");
 
                     b.ToTable("AbpTenants");
-                });
-
-            modelBuilder.Entity("MYH.ABP.Order.OrderInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("OrderMsg");
-
-                    b.Property<string>("OrderNum");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderInfo");
                 });
 
             modelBuilder.Entity("MYH.ABP.PhoneBook.Persons.Person", b =>
@@ -1117,7 +1127,7 @@ namespace MYH.ABP.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("OrderInfo","PB");
+                    b.ToTable("PhoneNumber","PB");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

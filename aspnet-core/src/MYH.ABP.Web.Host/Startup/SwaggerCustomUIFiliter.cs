@@ -53,8 +53,8 @@ namespace MYH.ABP.Web.Host.Startup
                     _type = _node.Attributes["name"].Value;
 
                     if (_type.StartsWith("T:")
-                        && !_type.Contains("T:HKERP.HKERPAppServiceBase")
-                        && !_type.Contains("T:HKERP.Net.MimeTypes.MimeTypeNames")
+                        && !_type.Contains("T:MYH.MYHAppServiceBase")
+                        && !_type.Contains("T:MYH.Net.MimeTypes.MimeTypeNames")
                         && _type.Contains("AppService"))
                     {
                         _summaryNode = _node.SelectSingleNode("summary");

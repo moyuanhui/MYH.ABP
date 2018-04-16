@@ -17,8 +17,8 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    [Migration("20180330031421_Add_NewPersonNumberEntity")]
-    partial class Add_NewPersonNumberEntity
+    [Migration("20180416025337_add-member-02")]
+    partial class addmember02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -992,6 +992,30 @@ namespace MYH.ABP.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("MYH.ABP.Member.MemberEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MemberEntity");
+                });
+
             modelBuilder.Entity("MYH.ABP.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1075,10 +1099,22 @@ namespace MYH.ABP.Migrations
 
             modelBuilder.Entity("MYH.ABP.PhoneBook.PhoneNum.PhoneNumber", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
 
                     b.Property<string>("Number")
                         .IsRequired();

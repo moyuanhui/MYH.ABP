@@ -17,9 +17,10 @@ using System;
 namespace MYH.ABP.Migrations
 {
     [DbContext(typeof(ABPDbContext))]
-    partial class ABPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180413081236_temp")]
+    partial class temp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -989,30 +990,6 @@ namespace MYH.ABP.Migrations
                     b.HasIndex("TenantId", "NormalizedUserName");
 
                     b.ToTable("AbpUsers");
-                });
-
-            modelBuilder.Entity("MYH.ABP.Member.MemberEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MemberEntity","EWMS");
                 });
 
             modelBuilder.Entity("MYH.ABP.MultiTenancy.Tenant", b =>
