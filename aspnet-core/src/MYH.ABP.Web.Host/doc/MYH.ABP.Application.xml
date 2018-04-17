@@ -14,6 +14,37 @@
             Default pass phrase for SimpleStringCipher decrypt/encrypt operations
             </summary>
         </member>
+        <member name="T:MYH.ABP.Member.Dto.CreateMemberInput">
+            <summary>
+            创建用户InputDto
+            </summary>
+        </member>
+        <member name="P:MYH.ABP.Member.Dto.CreateMemberInput.CompanyId">
+            <summary>
+            公司ID
+            </summary>
+        </member>
+        <member name="P:MYH.ABP.Member.Dto.CreateMemberInput.AccountId">
+            <summary>
+            账户ID
+            </summary>
+        </member>
+        <member name="P:MYH.ABP.Member.Dto.CreateMemberInput.OpenIdMp">
+            <summary>
+            公众号OpenId
+            </summary>
+        </member>
+        <member name="T:MYH.ABP.Member.MemberService">
+            <summary>
+            会员
+            </summary>
+        </member>
+        <member name="M:MYH.ABP.Member.MemberService.CreateMember(MYH.ABP.Member.Dto.CreateMemberInput)">
+            <summary>
+            创建会员
+            </summary>
+            <param name="input"></param>
+        </member>
         <member name="T:MYH.ABP.Net.MimeTypes.MimeTypeNames">
             <summary>
             Common mime types. 

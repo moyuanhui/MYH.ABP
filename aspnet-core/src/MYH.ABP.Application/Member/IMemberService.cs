@@ -3,11 +3,12 @@ using MYH.ABP.Member.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MYH.ABP.Member
 {
     public interface IMemberIService : IApplicationService
     {
-        void CreateMember(CreateMemberInput input);
+        Task<CreateMemberInput> CreateMember(CreateMemberInput input);
     }
 }
